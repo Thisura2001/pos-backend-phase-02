@@ -1,4 +1,6 @@
 package lk.ijse.posbackendphase02.Dto.Impl;
 
-public class CustomerDto {
+import lk.ijse.posbackendphase02.Dto.CustomerStatus;
+
+public class CustomerDto implements CustomerStatus {
 }

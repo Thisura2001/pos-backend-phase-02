@@ -1,4 +1,6 @@
 package lk.ijse.posbackendphase02.Service.Impl;
 
-public class ItemServiceImpl {
+import lk.ijse.posbackendphase02.Service.ItemService;
+
+public class ItemServiceImpl implements ItemService {
 }

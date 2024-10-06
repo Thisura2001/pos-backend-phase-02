@@ -1,4 +1,6 @@
 package lk.ijse.posbackendphase02.Dto.Impl;
 
-public class ItemDto {
+import lk.ijse.posbackendphase02.Dto.ItemStatus;
+
+public class ItemDto implements ItemStatus {
 }
