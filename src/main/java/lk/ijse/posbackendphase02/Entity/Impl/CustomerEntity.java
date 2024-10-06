@@ -20,6 +20,8 @@ public class CustomerEntity implements SuperEntity {
     private String name;
     private String salary;
     private String address;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<OrderEntity> orderEntities;
+    private List<OrderEntity> orders;
 }
+

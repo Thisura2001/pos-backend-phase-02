@@ -14,12 +14,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "OrderDetail")
 public class OrderDetailEntity implements SuperEntity {
     @Id
-    private Long id;
-    private String orderId;
-    private String itemCode;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;  // Unique identifier for each order detail entry
+
     private String qty;
     private String unitPrice;
-    private String customerId;
     private String itemName;
 
     @ManyToOne
