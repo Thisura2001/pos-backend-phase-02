@@ -5,6 +5,8 @@ import lk.ijse.posbackendphase02.Dto.Impl.CustomerDto;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface CustomerService {
     void saveCustomer(CustomerDto customerDto);
 
@@ -13,4 +15,6 @@ public interface CustomerService {
     void UpdateCustomer(String customerId, CustomerDto customerDto);
 
     void DeleteCustomer(String customerId);
+
+    List<CustomerDto> getAllCustomers();
 }

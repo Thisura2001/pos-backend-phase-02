@@ -15,6 +15,8 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/customers")
 public class CustomerController {
@@ -38,6 +40,10 @@ public class CustomerController {
             return new StatusCodes(1,"Customer Id not matched !!");
         }
         return customerService.getCustomerById(customerId);
+    }
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CustomerDto>getAllCustomer(){
+        return customerService.getAllCustomers();
     }
     @PutMapping(value = "/{customerId}")
     public ResponseEntity<Void>UpdateCustomer(@PathVariable ("customerId") String customerId,@RequestBody CustomerDto customerDto){

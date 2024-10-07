@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,5 +51,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void DeleteCustomer(String customerId) {
         customerRepo.deleteById(customerId);
+    }
+
+    @Override
+    public List<CustomerDto> getAllCustomers() {
+        List<CustomerEntity>customerEntities = customerRepo.findAll();
+        return customerMapping.asCustomerDtoList(customerEntities);
     }
 }
