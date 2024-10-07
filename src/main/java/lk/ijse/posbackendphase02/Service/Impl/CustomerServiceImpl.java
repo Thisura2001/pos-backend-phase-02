@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepo customerRepo;
@@ -29,8 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerStatus getCustomerById(String customerId) {
-        CustomerEntity customerEntity = customerRepo.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        CustomerEntity customerEntity = customerRepo.getReferenceById(customerId);
         return customerMapping.ToCustomerDto(customerEntity);
     }
 
@@ -40,12 +41,14 @@ public class CustomerServiceImpl implements CustomerService {
         if (!byId.isPresent()){
             throw new CustomerNotFoundException("Customer Not Found !!");
         }else {
-            CustomerEntity customerEntity = byId.get();
             byId.get().setName(customerDto.getName());
             byId.get().setSalary(customerDto.getSalary());
             byId.get().setAddress(customerDto.getAddress());
-
-            customerRepo.save(customerEntity);
         }
+    }
+
+    @Override
+    public void DeleteCustomer(String customerId) {
+        customerRepo.deleteById(customerId);
     }
 }

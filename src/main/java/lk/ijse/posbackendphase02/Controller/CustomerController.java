@@ -3,9 +3,11 @@ package lk.ijse.posbackendphase02.Controller;
 import lk.ijse.posbackendphase02.CustomStatusCodes.StatusCodes;
 import lk.ijse.posbackendphase02.Dto.CustomerStatus;
 import lk.ijse.posbackendphase02.Dto.Impl.CustomerDto;
+import lk.ijse.posbackendphase02.Exception.CustomerNotFoundException;
 import lk.ijse.posbackendphase02.Exception.DataPersistException;
 import lk.ijse.posbackendphase02.Service.CustomerService;
 import lk.ijse.posbackendphase02.Util.RegexProcess;
+import org.hibernate.type.descriptor.sql.internal.Scale6IntervalSecondDdlType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,6 +47,20 @@ public class CustomerController {
             }
             customerService.UpdateCustomer(customerId,customerDto);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @DeleteMapping(value = "/{customerId}")
+    public ResponseEntity<Void> DeleteCustomer(@PathVariable ("customerId") String customerId){
+        try {
+            if (!RegexProcess.CustomerIdMatcher(customerId)){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            customerService.DeleteCustomer(customerId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (CustomerNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
