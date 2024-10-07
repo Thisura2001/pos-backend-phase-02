@@ -3,6 +3,7 @@ package lk.ijse.posbackendphase02.Service.Impl;
 import lk.ijse.posbackendphase02.Dto.CustomerStatus;
 import lk.ijse.posbackendphase02.Dto.Impl.CustomerDto;
 import lk.ijse.posbackendphase02.Entity.Impl.CustomerEntity;
+import lk.ijse.posbackendphase02.Exception.CustomerNotFoundException;
 import lk.ijse.posbackendphase02.Repository.CustomerRepo;
 import lk.ijse.posbackendphase02.Service.CustomerService;
 import lk.ijse.posbackendphase02.Util.AppUtil;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -29,5 +32,20 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerEntity customerEntity = customerRepo.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
         return customerMapping.ToCustomerDto(customerEntity);
+    }
+
+    @Override
+    public void UpdateCustomer(String customerId, CustomerDto customerDto) {
+        Optional<CustomerEntity> byId = customerRepo.findById(customerId);
+        if (!byId.isPresent()){
+            throw new CustomerNotFoundException("Customer Not Found !!");
+        }else {
+            CustomerEntity customerEntity = byId.get();
+            byId.get().setName(customerDto.getName());
+            byId.get().setSalary(customerDto.getSalary());
+            byId.get().setAddress(customerDto.getAddress());
+
+            customerRepo.save(customerEntity);
+        }
     }
 }

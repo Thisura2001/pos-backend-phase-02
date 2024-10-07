@@ -37,4 +37,16 @@ public class CustomerController {
         }
         return customerService.getCustomerById(customerId);
     }
+    @PutMapping(value = "/{customerId}")
+    public ResponseEntity<Void>UpdateCustomer(@PathVariable ("customerId") String customerId,@RequestBody CustomerDto customerDto){
+        try {
+            if (!RegexProcess.CustomerIdMatcher(customerId) || customerDto == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            customerService.UpdateCustomer(customerId,customerDto);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
