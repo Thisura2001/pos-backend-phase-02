@@ -1,5 +1,6 @@
 package lk.ijse.posbackendphase02.Service.Impl;
 
+import lk.ijse.posbackendphase02.Dto.CustomerStatus;
 import lk.ijse.posbackendphase02.Dto.Impl.CustomerDto;
 import lk.ijse.posbackendphase02.Entity.Impl.CustomerEntity;
 import lk.ijse.posbackendphase02.Repository.CustomerRepo;
@@ -21,5 +22,12 @@ public class CustomerServiceImpl implements CustomerService {
     public void saveCustomer(CustomerDto customerDto) {
         customerDto.setId(AppUtil.generateCustomerId());
         customerRepo.save(customerMapping.ToCustomerEntity(customerDto));
+    }
+
+    @Override
+    public CustomerStatus getCustomerById(String customerId) {
+        CustomerEntity customerEntity = customerRepo.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        return customerMapping.ToCustomerDto(customerEntity);
     }
 }
