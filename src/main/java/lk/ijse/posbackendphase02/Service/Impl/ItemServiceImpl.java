@@ -1,6 +1,8 @@
 package lk.ijse.posbackendphase02.Service.Impl;
 
 import lk.ijse.posbackendphase02.Dto.Impl.ItemDto;
+import lk.ijse.posbackendphase02.Dto.ItemStatus;
+import lk.ijse.posbackendphase02.Entity.Impl.ItemEntity;
 import lk.ijse.posbackendphase02.Repository.ItemRepo;
 import lk.ijse.posbackendphase02.Service.ItemService;
 import lk.ijse.posbackendphase02.Util.Mapping;
@@ -19,5 +21,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void saveItems(ItemDto itemDto) {
         itemRepo.save(itemMapper.ToItemEntity(itemDto));
+    }
+
+    @Override
+    public ItemStatus getItemById(String itemId) {
+        ItemEntity itemEntity = itemRepo.getReferenceById(itemId);
+        return itemMapper.ToItemDto(itemEntity);
     }
 }
