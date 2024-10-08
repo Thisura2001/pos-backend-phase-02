@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ItemServiceImpl implements ItemService {
@@ -27,5 +29,11 @@ public class ItemServiceImpl implements ItemService {
     public ItemStatus getItemById(String itemId) {
         ItemEntity itemEntity = itemRepo.getReferenceById(itemId);
         return itemMapper.ToItemDto(itemEntity);
+    }
+
+    @Override
+    public List<ItemDto> getAllItems() {
+        List<ItemEntity>itemEntities = itemRepo.findAll();
+        return itemMapper.asItemDtoList(itemEntities);
     }
 }
