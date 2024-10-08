@@ -16,20 +16,20 @@ public class Mapping {
     private ModelMapper modelMapper;
 
     //for user mapping
-    public CustomerEntity ToCustomerEntity(CustomerDto customerDto){//Converts a UserDto object into a UserEntity object.
+    public CustomerEntity ToCustomerEntity(CustomerDto customerDto){
         return modelMapper.map(customerDto, CustomerEntity.class);
     }
-    public CustomerDto ToCustomerDto(CustomerEntity customerEntity){//Converts a UserEntity object into a UserDto object.
+    public CustomerDto ToCustomerDto(CustomerEntity customerEntity){
         return modelMapper.map(customerEntity, CustomerDto.class);
     }
     public List<CustomerDto> asCustomerDtoList(List<CustomerEntity> customerEntities){
         return modelMapper.map(customerEntities, new TypeToken<List<CustomerDto>>() {}.getType());
     }
 
-    public ItemEntity ToItemEntity(ItemDto itemDto){//Converts a UserDto object into a UserEntity object.
+    public ItemEntity ToItemEntity(ItemDto itemDto){
         return modelMapper.map(itemDto, ItemEntity.class);
     }
-    public ItemDto ToItemDto(ItemEntity itemEntity){//Converts a UserEntity object into a UserDto object.
+    public ItemDto ToItemDto(ItemEntity itemEntity){
         return modelMapper.map(itemEntity, ItemDto.class);
     }
     public List<ItemDto> asItemDtoList(List<ItemEntity> itemEntities){
