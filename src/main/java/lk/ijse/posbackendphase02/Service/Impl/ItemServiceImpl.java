@@ -3,6 +3,7 @@ package lk.ijse.posbackendphase02.Service.Impl;
 import lk.ijse.posbackendphase02.Dto.Impl.ItemDto;
 import lk.ijse.posbackendphase02.Dto.ItemStatus;
 import lk.ijse.posbackendphase02.Entity.Impl.ItemEntity;
+import lk.ijse.posbackendphase02.Exception.CustomerNotFoundException;
 import lk.ijse.posbackendphase02.Repository.ItemRepo;
 import lk.ijse.posbackendphase02.Service.ItemService;
 import lk.ijse.posbackendphase02.Util.Mapping;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,5 +37,18 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDto> getAllItems() {
         List<ItemEntity>itemEntities = itemRepo.findAll();
         return itemMapper.asItemDtoList(itemEntities);
+    }
+
+    @Override
+    public void updateItems(ItemDto itemDto, String itemId) {
+        Optional<ItemEntity> byId = itemRepo.findById(itemId);
+        if (!byId.isPresent()){
+            throw new CustomerNotFoundException("Item Not Found !!");
+        }else {
+            byId.get().setItemName(itemDto.getItemName());
+            byId.get().setPrice(itemDto.getPrice());
+            byId.get().setQty(itemDto.getQty());
+        }
+
     }
 }

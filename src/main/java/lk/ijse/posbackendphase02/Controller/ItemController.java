@@ -40,4 +40,13 @@ public class ItemController {
     public List<ItemDto>getAllItems(){
         return itemService.getAllItems();
     }
+    @PutMapping(value = "/{itemId}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateItems(@RequestBody ItemDto itemDto,@PathVariable ("itemId") String itemId){
+        try {
+            itemService.updateItems(itemDto,itemId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
