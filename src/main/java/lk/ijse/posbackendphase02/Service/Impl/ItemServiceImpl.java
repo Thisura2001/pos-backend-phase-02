@@ -9,6 +9,7 @@ import lk.ijse.posbackendphase02.Service.ItemService;
 import lk.ijse.posbackendphase02.Util.Mapping;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,5 +51,10 @@ public class ItemServiceImpl implements ItemService {
             byId.get().setQty(itemDto.getQty());
         }
 
+    }
+
+    @Override
+    public void DeleteItem(String itemCode) {
+         itemRepo.deleteById(itemCode);
     }
 }
