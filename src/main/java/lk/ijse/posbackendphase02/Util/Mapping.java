@@ -1,7 +1,9 @@
 package lk.ijse.posbackendphase02.Util;
 
 import lk.ijse.posbackendphase02.Dto.Impl.CustomerDto;
+import lk.ijse.posbackendphase02.Dto.Impl.ItemDto;
 import lk.ijse.posbackendphase02.Entity.Impl.CustomerEntity;
+import lk.ijse.posbackendphase02.Entity.Impl.ItemEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +24,15 @@ public class Mapping {
     }
     public List<CustomerDto> asCustomerDtoList(List<CustomerEntity> customerEntities){
         return modelMapper.map(customerEntities, new TypeToken<List<CustomerDto>>() {}.getType());
+    }
+
+    public ItemEntity ToItemEntity(ItemDto itemDto){//Converts a UserDto object into a UserEntity object.
+        return modelMapper.map(itemDto, ItemEntity.class);
+    }
+    public ItemDto ToItemDto(ItemEntity itemEntity){//Converts a UserEntity object into a UserDto object.
+        return modelMapper.map(itemEntity, ItemDto.class);
+    }
+    public List<ItemDto> asItemDtoList(List<ItemEntity> itemEntities){
+        return modelMapper.map(itemEntities, new TypeToken<List<ItemDto>>() {}.getType());
     }
 }
