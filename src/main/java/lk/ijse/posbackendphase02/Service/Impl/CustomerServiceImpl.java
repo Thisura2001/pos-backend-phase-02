@@ -26,7 +26,6 @@ public class CustomerServiceImpl implements CustomerService {
     private Mapping customerMapping;
     @Override
     public void saveCustomer(CustomerDto customerDto) {
-        customerDto.setId(AppUtil.generateCustomerId());
         customerRepo.save(customerMapping.ToCustomerEntity(customerDto));
     }
 

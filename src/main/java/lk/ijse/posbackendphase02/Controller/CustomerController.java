@@ -36,9 +36,6 @@ public class CustomerController {
     }
     @GetMapping(value = "/{customerId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomerStatus getCustomerById(@PathVariable ("customerId") String customerId){
-        if (!RegexProcess.CustomerIdMatcher(customerId)){
-            return new StatusCodes(1,"Customer Id not matched !!");
-        }
         return customerService.getCustomerById(customerId);
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,23 +43,20 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
     @PutMapping(value = "/{customerId}")
-    public ResponseEntity<Void>UpdateCustomer(@PathVariable ("customerId") String customerId,@RequestBody CustomerDto customerDto){
+    public ResponseEntity<Void> UpdateCustomer(@PathVariable("customerId") String customerId, @RequestBody CustomerDto customerDto) {
         try {
-            if (!RegexProcess.CustomerIdMatcher(customerId) || customerDto == null){
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            customerService.UpdateCustomer(customerId,customerDto);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            customerService.UpdateCustomer(customerId, customerDto);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);  // 204 No Content for success
+        } catch (CustomerNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // 404 Not Found for non-existent customer
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);  // 500 Internal Server Error for general errors
         }
     }
+
     @DeleteMapping(value = "/{customerId}")
     public ResponseEntity<Void> DeleteCustomer(@PathVariable ("customerId") String customerId){
         try {
-            if (!RegexProcess.CustomerIdMatcher(customerId)){
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
             customerService.DeleteCustomer(customerId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (CustomerNotFoundException e){
