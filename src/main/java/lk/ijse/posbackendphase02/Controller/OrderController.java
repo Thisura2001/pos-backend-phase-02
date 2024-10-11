@@ -1,8 +1,10 @@
 package lk.ijse.posbackendphase02.Controller;
 
+import lk.ijse.posbackendphase02.CustomStatusCodes.StatusCodes;
 import lk.ijse.posbackendphase02.Dto.Impl.OrderDto;
 import lk.ijse.posbackendphase02.Dto.OrderStatus;
 import lk.ijse.posbackendphase02.Exception.DataPersistException;
+import lk.ijse.posbackendphase02.Exception.OrderNotFoundException;
 import lk.ijse.posbackendphase02.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,8 +37,8 @@ public class OrderController {
         return ResponseEntity.ok().body(newOrderId);
     }
     @GetMapping("/{orderId}")
-    public OrderStatus getOrderStatus(@PathVariable ("orderId") String orderId){
-        return orderService.getOrderById(orderId);
+    public OrderStatus getOrderById(@PathVariable ("orderId") String orderId){
+            return orderService.getOrderById(orderId);
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<OrderDto>getAllOrders(){
