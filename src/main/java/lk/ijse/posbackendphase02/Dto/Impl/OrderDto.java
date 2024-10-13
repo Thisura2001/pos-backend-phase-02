@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -15,4 +17,5 @@ public class OrderDto implements OrderStatus {
     private String netTotal;
     private String discount;
     private String finalTotal;
+    private List<OrderDetailDto> orderDetails;
 }

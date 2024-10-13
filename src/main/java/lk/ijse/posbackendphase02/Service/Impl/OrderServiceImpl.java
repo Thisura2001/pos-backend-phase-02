@@ -3,6 +3,7 @@ package lk.ijse.posbackendphase02.Service.Impl;
 import lk.ijse.posbackendphase02.Dto.Impl.OrderDto;
 import lk.ijse.posbackendphase02.Dto.OrderStatus;
 import lk.ijse.posbackendphase02.Entity.Impl.OrderEntity;
+import lk.ijse.posbackendphase02.Repository.OrderDetailRepo;
 import lk.ijse.posbackendphase02.Repository.OrderRepo;
 import lk.ijse.posbackendphase02.Service.OrderService;
 import lk.ijse.posbackendphase02.Util.Mapping;
@@ -20,6 +21,9 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepo orderRepo;
     @Autowired
     private Mapping orderMapper;
+    @Autowired
+    private OrderDetailRepo orderDetailRepo;
+
     @Override
     public String generateNewOrderId() {
         Optional<OrderEntity> lastOrder = orderRepo.findTopByOrderByOrderIdDesc();
