@@ -2,9 +2,11 @@ package lk.ijse.posbackendphase02.Util;
 
 import lk.ijse.posbackendphase02.Dto.Impl.CustomerDto;
 import lk.ijse.posbackendphase02.Dto.Impl.ItemDto;
+import lk.ijse.posbackendphase02.Dto.Impl.OrderDetailDto;
 import lk.ijse.posbackendphase02.Dto.Impl.OrderDto;
 import lk.ijse.posbackendphase02.Entity.Impl.CustomerEntity;
 import lk.ijse.posbackendphase02.Entity.Impl.ItemEntity;
+import lk.ijse.posbackendphase02.Entity.Impl.OrderDetailEntity;
 import lk.ijse.posbackendphase02.Entity.Impl.OrderEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -45,5 +47,15 @@ public class Mapping {
     }
     public List<OrderDto> asOrderDtoList(List<OrderEntity> orderEntities){
         return modelMapper.map(orderEntities, new TypeToken<List<OrderDto>>() {}.getType());
+    }
+
+    public OrderDetailEntity ToOrderDetailEntity(OrderDetailDto orderDetailDto){
+        return modelMapper.map(orderDetailDto, OrderDetailEntity.class);
+    }
+    public OrderDetailDto ToOrderDetailDto(OrderDetailEntity orderDetailEntity){
+        return modelMapper.map(orderDetailEntity, OrderDetailDto.class);
+    }
+    public List<OrderDetailDto> asOrderDetailDtoList(List<OrderDetailEntity> orderDetailEntities){
+        return modelMapper.map(orderDetailEntities, new TypeToken<List<OrderDetailDto>>() {}.getType());
     }
 }

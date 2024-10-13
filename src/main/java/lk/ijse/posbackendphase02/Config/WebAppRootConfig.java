@@ -1,6 +1,7 @@
 package lk.ijse.posbackendphase02.Config;
 
 import jakarta.persistence.EntityManagerFactory;
+import lk.ijse.posbackendphase02.Service.OrderDetailService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
