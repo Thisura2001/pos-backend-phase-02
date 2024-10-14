@@ -29,29 +29,29 @@ public class CustomerController {
     public ResponseEntity<Void> saveCustomer(@RequestBody CustomerDto customerDto){
         try {
             customerService.saveCustomer(customerDto);
-            logger.info("Customer Added");
+//            logger.info("Customer Added");
             return new ResponseEntity<>(HttpStatus.CREATED);
 
 
         }catch (DataPersistException e){
-            logger.warn("Customer Not Added");
+//            logger.warn("Customer Not Added");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
-            logger.error("Customer Not Added");
+//            logger.error("Customer Not Added");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping(value = "/{customerId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomerStatus getCustomerById(@PathVariable ("customerId") String customerId){
         CustomerStatus customerById = customerService.getCustomerById(customerId);
-        logger.info("Customer Retrieved");
+//        logger.info("Customer Retrieved");
         return customerById;
 
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerDto>getAllCustomer(){
         List<CustomerDto> allCustomers = customerService.getAllCustomers();
-        logger.info("Customer Retrieved");
+//        logger.info("Customer Retrieved");
         return allCustomers;
     }
     @PutMapping(value = "/{customerId}")

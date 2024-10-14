@@ -1,5 +1,6 @@
 package lk.ijse.posbackendphase02.Util;
 
+import jakarta.persistence.criteria.Order;
 import lk.ijse.posbackendphase02.Dto.Impl.CustomerDto;
 import lk.ijse.posbackendphase02.Dto.Impl.ItemDto;
 import lk.ijse.posbackendphase02.Dto.Impl.OrderDetailDto;
@@ -40,7 +41,8 @@ public class Mapping {
         return modelMapper.map(itemEntities, new TypeToken<List<ItemDto>>() {}.getType());
     }
     public OrderEntity ToOrderEntity(OrderDto orderDto){
-        return modelMapper.map(orderDto, OrderEntity.class);
+        return new OrderEntity(orderDto.getOrderId(), orderDto.getAmount(), orderDto.getNetTotal(), orderDto.getDiscount(),
+                orderDto.getFinalTotal(),null, null);
     }
     public OrderDto ToOrderDto(OrderEntity orderEntity){
         return modelMapper.map(orderEntity, OrderDto.class);

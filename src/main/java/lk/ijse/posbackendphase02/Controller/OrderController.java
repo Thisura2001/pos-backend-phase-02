@@ -20,9 +20,10 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void>saveOrder(@RequestBody OrderDto orderDto){
         try {
+            System.out.println(orderDto);
             orderService.saveOrder(orderDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){

@@ -3,10 +3,12 @@ package lk.ijse.posbackendphase02.Service.Impl;
 import lk.ijse.posbackendphase02.Dto.Impl.OrderDetailDto;
 import lk.ijse.posbackendphase02.Dto.Impl.OrderDto;
 import lk.ijse.posbackendphase02.Dto.OrderStatus;
+import lk.ijse.posbackendphase02.Entity.Impl.CustomerEntity;
 import lk.ijse.posbackendphase02.Entity.Impl.ItemEntity;
 import lk.ijse.posbackendphase02.Entity.Impl.OrderDetailEntity;
 import lk.ijse.posbackendphase02.Entity.Impl.OrderEntity;
 import lk.ijse.posbackendphase02.Exception.DataPersistException;
+import lk.ijse.posbackendphase02.Repository.CustomerRepo;
 import lk.ijse.posbackendphase02.Repository.ItemRepo;
 import lk.ijse.posbackendphase02.Repository.OrderDetailRepo;
 import lk.ijse.posbackendphase02.Repository.OrderRepo;
@@ -27,6 +29,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepo orderRepo;
     @Autowired
+    private CustomerRepo customerRepo;
+    @Autowired
     private Mapping orderMapper;
     @Autowired
     private OrderDetailRepo orderDetailRepo;
@@ -44,22 +48,25 @@ public class OrderServiceImpl implements OrderService {
     public void saveOrder(OrderDto orderDto) {
         // Map to OrderEntity
         OrderEntity orderEntity = orderMapper.ToOrderEntity(orderDto);
+        CustomerEntity serchedCustomer = customerRepo.getReferenceById(orderDto.getOrderDetails().get(0).getCustomerId());
+        orderEntity.setCustomer(serchedCustomer);
+        System.out.println("order entity: " + orderEntity);
 
         // Save the order first
         orderRepo.save(orderEntity);
-
-        // If there are order details, map and save them
-        if (orderDto.getOrderDetails() != null && !orderDto.getOrderDetails().isEmpty()) {
-            List<OrderDetailEntity> orderDetails = orderDto.getOrderDetails().stream()
-                    .map(orderDetailDto -> {
-                        OrderDetailEntity orderDetailEntity = orderMapper.ToOrderDetailEntity(orderDetailDto);
-                        orderDetailEntity.setOrder(orderEntity); // Set the parent order
-                        return orderDetailEntity;
-                    }).collect(Collectors.toList());
-
-            // Save order details
-            orderDetailRepo.saveAll(orderDetails);
-        }
+//
+//        // If there are order details, map and save them
+//        if (orderDto.getOrderDetails() != null && !orderDto.getOrderDetails().isEmpty()) {
+//            List<OrderDetailEntity> orderDetails = orderDto.getOrderDetails().stream()
+//                    .map(orderDetailDto -> {
+//                        OrderDetailEntity orderDetailEntity = orderMapper.ToOrderDetailEntity(orderDetailDto);
+//                        orderDetailEntity.setOrder(orderEntity); // Set the parent order
+//                        return orderDetailEntity;
+//                    }).collect(Collectors.toList());
+//
+//            // Save order details
+//            orderDetailRepo.saveAll(orderDetails);
+//        }
     }
 
 
