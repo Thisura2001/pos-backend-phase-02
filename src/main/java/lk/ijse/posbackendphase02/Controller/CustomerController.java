@@ -29,30 +29,42 @@ public class CustomerController {
     public ResponseEntity<Void> saveCustomer(@RequestBody CustomerDto customerDto){
         try {
             customerService.saveCustomer(customerDto);
+            logger.info("Customer Added");
             return new ResponseEntity<>(HttpStatus.CREATED);
 
+
         }catch (DataPersistException e){
+            logger.warn("Customer Not Added");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            logger.error("Customer Not Added");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping(value = "/{customerId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomerStatus getCustomerById(@PathVariable ("customerId") String customerId){
-        return customerService.getCustomerById(customerId);
+        CustomerStatus customerById = customerService.getCustomerById(customerId);
+        logger.info("Customer Retrieved");
+        return customerById;
+
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerDto>getAllCustomer(){
-        return customerService.getAllCustomers();
+        List<CustomerDto> allCustomers = customerService.getAllCustomers();
+        logger.info("Customer Retrieved");
+        return allCustomers;
     }
     @PutMapping(value = "/{customerId}")
     public ResponseEntity<Void> UpdateCustomer(@PathVariable("customerId") String customerId, @RequestBody CustomerDto customerDto) {
         try {
             customerService.UpdateCustomer(customerId, customerDto);
+            logger.info("Customer Updated");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);  // 204 No Content for success
         } catch (CustomerNotFoundException e) {
+            logger.warn("Customer Not Found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // 404 Not Found for non-existent customer
         } catch (Exception e) {
+            logger.error("Customer Not Updated");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);  // 500 Internal Server Error for general errors
         }
     }
@@ -61,10 +73,13 @@ public class CustomerController {
     public ResponseEntity<Void> DeleteCustomer(@PathVariable ("customerId") String customerId){
         try {
             customerService.DeleteCustomer(customerId);
+            logger.info("Customer Deleted");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (CustomerNotFoundException e){
+            logger.warn("Customer Not Found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
+            logger.error("Customer Not Deleted");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
