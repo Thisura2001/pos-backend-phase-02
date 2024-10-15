@@ -34,6 +34,8 @@ public class OrderServiceImpl implements OrderService {
     private Mapping orderMapper;
     @Autowired
     private OrderDetailRepo orderDetailRepo;
+    @Autowired
+    private ItemRepo itemRepo;
 
     @Override
     public String generateNewOrderId() {
@@ -53,20 +55,27 @@ public class OrderServiceImpl implements OrderService {
         System.out.println("order entity: " + orderEntity);
 
         // Save the order first
-        orderRepo.save(orderEntity);
+        OrderEntity saveOrder = orderRepo.save(orderEntity);
 //
-//        // If there are order details, map and save them
-//        if (orderDto.getOrderDetails() != null && !orderDto.getOrderDetails().isEmpty()) {
-//            List<OrderDetailEntity> orderDetails = orderDto.getOrderDetails().stream()
-//                    .map(orderDetailDto -> {
-//                        OrderDetailEntity orderDetailEntity = orderMapper.ToOrderDetailEntity(orderDetailDto);
-//                        orderDetailEntity.setOrder(orderEntity); // Set the parent order
-//                        return orderDetailEntity;
-//                    }).collect(Collectors.toList());
-//
-//            // Save order details
-//            orderDetailRepo.saveAll(orderDetails);
-//        }
+        if (saveOrder != null) {
+            // If the order is saved successfully, insert data into the order details
+            for (OrderDetailDto orderDetailDto : orderDto.getOrderDetails()) {
+                // Map OrderDetailDto to OrderDetailEntity
+                OrderDetailEntity orderDetailEntity = new OrderDetailEntity();
+
+                // Set the relevant fields
+                orderDetailEntity.setOrder(saveOrder);  // Associate with the saved order
+                orderDetailEntity.setItem(itemRepo.getReferenceById(orderDetailDto.getItemCode()));  // Fetch the item and associate it
+                orderDetailEntity.setQty(orderDetailDto.getQty());  // Set quantity
+                orderDetailEntity.setUnitPrice(orderDetailDto.getUnitPrice());  // Set unit price
+
+                // Save the order detail to the database
+                orderDetailRepo.save(orderDetailEntity);
+            }
+        } else {
+            throw new IllegalStateException("Failed to save the order.");
+        }
+
     }
 
 
