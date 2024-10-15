@@ -2,15 +2,14 @@ package lk.ijse.posbackendphase02.Entity.Impl;
 
 import jakarta.persistence.*;
 import lk.ijse.posbackendphase02.Entity.SuperEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 
 @Entity
 @Table(name = "Orders")

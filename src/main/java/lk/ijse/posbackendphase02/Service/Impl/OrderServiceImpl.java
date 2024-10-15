@@ -66,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
                 // Set the relevant fields
                 orderDetailEntity.setOrder(saveOrder);  // Associate with the saved order
                 orderDetailEntity.setItem(itemRepo.getReferenceById(orderDetailDto.getItemCode()));  // Fetch the item and associate it
+                orderDetailEntity.setItemName(orderDetailDto.getItemName());
                 orderDetailEntity.setQty(orderDetailDto.getQty());  // Set quantity
                 orderDetailEntity.setUnitPrice(orderDetailDto.getUnitPrice());  // Set unit price
 
