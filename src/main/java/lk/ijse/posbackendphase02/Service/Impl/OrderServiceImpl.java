@@ -48,7 +48,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void saveOrder(OrderDto orderDto) {
-        // Map to OrderEntity
         OrderEntity orderEntity = orderMapper.ToOrderEntity(orderDto);
         CustomerEntity serchedCustomer = customerRepo.getReferenceById(orderDto.getOrderDetails().get(0).getCustomerId());
         orderEntity.setCustomer(serchedCustomer);
@@ -64,14 +63,27 @@ public class OrderServiceImpl implements OrderService {
                 OrderDetailEntity orderDetailEntity = new OrderDetailEntity();
 
                 // Set the relevant fields
-                orderDetailEntity.setOrder(saveOrder);  // Associate with the saved order
-                orderDetailEntity.setItem(itemRepo.getReferenceById(orderDetailDto.getItemCode()));  // Fetch the item and associate it
+                orderDetailEntity.setOrder(saveOrder);
+                orderDetailEntity.setItem(itemRepo.getReferenceById(orderDetailDto.getItemCode()));
                 orderDetailEntity.setItemName(orderDetailDto.getItemName());
-                orderDetailEntity.setQty(orderDetailDto.getQty());  // Set quantity
-                orderDetailEntity.setUnitPrice(orderDetailDto.getUnitPrice());  // Set unit price
+                orderDetailEntity.setQty(orderDetailDto.getQty());
+                orderDetailEntity.setUnitPrice(orderDetailDto.getUnitPrice());
 
                 // Save the order detail to the database
-                orderDetailRepo.save(orderDetailEntity);
+                OrderDetailEntity saveOrderDetail = orderDetailRepo.save(orderDetailEntity);
+                if (saveOrderDetail != null) {
+                    // If the order detail is saved successfully, update the item quantity
+                    ItemEntity itemEntity = itemRepo.getReferenceById(orderDetailDto.getItemCode());
+
+                    // Convert String to int
+                    int currentQty = Integer.parseInt(itemEntity.getQty());
+                    int orderedQty = Integer.parseInt(orderDetailDto.getQty());
+
+
+                    itemEntity.setQty(String.valueOf(currentQty - orderedQty));
+                    itemRepo.save(itemEntity);
+                }
+
             }
         } else {
             throw new IllegalStateException("Failed to save the order.");
