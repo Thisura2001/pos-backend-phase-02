@@ -6,6 +6,7 @@ import lk.ijse.posbackendphase02.Dto.Impl.CustomerDto;
 import lk.ijse.posbackendphase02.Exception.CustomerNotFoundException;
 import lk.ijse.posbackendphase02.Exception.DataPersistException;
 import lk.ijse.posbackendphase02.Service.CustomerService;
+import lk.ijse.posbackendphase02.Util.AppUtil;
 import lk.ijse.posbackendphase02.Util.RegexProcess;
 import org.hibernate.type.descriptor.sql.internal.Scale6IntervalSecondDdlType;
 import org.slf4j.Logger;

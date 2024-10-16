@@ -3,6 +3,7 @@ package lk.ijse.posbackendphase02.Service.Impl;
 import lk.ijse.posbackendphase02.Dto.CustomerStatus;
 import lk.ijse.posbackendphase02.Dto.Impl.CustomerDto;
 import lk.ijse.posbackendphase02.Entity.Impl.CustomerEntity;
+import lk.ijse.posbackendphase02.Entity.Impl.OrderEntity;
 import lk.ijse.posbackendphase02.Exception.CustomerNotFoundException;
 import lk.ijse.posbackendphase02.Repository.CustomerRepo;
 import lk.ijse.posbackendphase02.Service.CustomerService;
