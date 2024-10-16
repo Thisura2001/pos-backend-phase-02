@@ -35,7 +35,7 @@ To get started with the POS Backend, ensure that the prerequisites are installed
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-repo/pos-backend.git
+https://github.com/Thisura2001/pos-backend-phase-02.git
 
 # Navigate to the project directory
 cd pos-backend
@@ -53,13 +53,13 @@ mvn spring-boot:run
 2. Create a database with the following command:
 
 ```sql
-CREATE DATABASE pos_db;
+CREATE DATABASE pos;
 ```
 
 3. Configure the MySQL credentials in the `application.properties` file:
 
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/pos_db
+spring.datasource.url=jdbc:mysql://localhost:3306/pos
 spring.datasource.username=root
 spring.datasource.password=your-password
 ```
@@ -71,17 +71,13 @@ Once the application is running, the following API operations will be available:
 - **Customer API**: `/api/v1/customers`
   - GET, POST, PUT, DELETE operations for managing customer details.
   
-- **Product API**: `/api/v1/products`
+- **Items API**: `/api/v1/items`
   - Manage product details such as name, price, and stock levels.
   
 - **Order API**: `/api/v1/orders`
   - Place orders, retrieve order history, and update order details.
 
 Optional: For detailed API documentation, visit the Swagger UI page at `/swagger-ui.html` after running the application.
-
-## Contributing
-
-If you wish to contribute, fork the repository and submit a pull request. We welcome contributions that improve the codebase, add new features, or enhance performance.
 
 ## License
 
