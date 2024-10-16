@@ -22,5 +22,4 @@ public class OrderDetailImpl implements OrderDetailService {
     public void save(OrderDetailDto orderDetailDto) {
         orderDetailRepo.save(orderDetailMapping.ToOrderDetailEntity(orderDetailDto));
     }
-
 }

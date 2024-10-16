@@ -20,6 +20,7 @@ public class OrderDetailController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void>saveOrderDetail(@RequestBody OrderDetailDto orderDetailDto) {
         try {
+            System.out.println(orderDetailDto);
             orderDetailService.save(orderDetailDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistException e) {
