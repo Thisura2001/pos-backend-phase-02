@@ -49,8 +49,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void saveOrder(OrderDto orderDto) {
         OrderEntity orderEntity = orderMapper.ToOrderEntity(orderDto);
-        CustomerEntity serchedCustomer = customerRepo.getReferenceById(orderDto.getOrderDetails().get(0).getCustomerId());
-        orderEntity.setCustomer(serchedCustomer);
+        CustomerEntity searchedCustomer = customerRepo.getReferenceById(orderDto.getOrderDetails().get(0).getCustomerId());
+        orderEntity.setCustomer(searchedCustomer);
         System.out.println("order entity: " + orderEntity);
 
         // Save the order first
